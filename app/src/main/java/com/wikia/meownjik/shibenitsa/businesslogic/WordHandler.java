@@ -1,5 +1,7 @@
 package com.wikia.meownjik.shibenitsa.businesslogic;
 
+import java.util.ArrayList;
+
 public class WordHandler {
     Languages lang;
     String availableLetters;
@@ -19,10 +21,32 @@ public class WordHandler {
         return hider;
     }
 
-    public boolean validateSymbols(String originalWord) {
+    /**
+     * Check if word doesn't contain special symbols used in the game logic
+     * @return true if OK, false if there are problems
+     */
+    public boolean validateSpecialSymbols(String originalWord) {
         return !originalWord.contains(hider);
     }
 
+    /**
+     * Check if word contains at least one proper letter
+     * @return true if OK, false if there are problems
+     */
+    public boolean validateLetters(String originalWord) {
+        ArrayList<String> letters = lang.getAvailableLettersAsList();
+        for(String l : letters) {
+            if (originalWord.contains(l)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Check if word has length greater than zero and less than maxLength
+     * @return true if OK, false if there are problems
+     */
     public boolean validateLength(String word) {
         if (word.length() == 0) {
             return false;

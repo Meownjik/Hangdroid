@@ -16,14 +16,6 @@ public class Game {
         this.lang = language;
         this.wordHandler = new WordHandler(lang);
 
-        if(!wordHandler.validateSymbols(word)) {
-            throw new IllegalArgumentException("The word shouldn't contain "
-                    + wordHandler.getHider() + "symbol!");
-        }
-        if(!wordHandler.validateLength(word)) {
-            throw new IllegalArgumentException("The word is either empty or too long!");
-        }
-
         this.usedLetters = new ArrayList<>();
         this.notUsedLetters = lang.getAvailableLettersAsList();
 
@@ -31,6 +23,8 @@ public class Game {
         this.hiddenWord = wordHandler.hide(originalWord);
 
         this.trialsLeft = trials;
+
+        validateWord();
     }
 
     public Game(Languages language, String word) {
@@ -59,6 +53,20 @@ public class Game {
     }
 
 /*---- BUSINESS LOGIC METHODS ----------------------------------------------------------------*/
+    private void validateWord() {
+        if(!wordHandler.validateSpecialSymbols(originalWord)) {
+            throw new IllegalArgumentException("The word shouldn't contain "
+                    + wordHandler.getHider() + "symbol!");
+        }
+        if(!wordHandler.validateLength(originalWord)) {
+            throw new IllegalArgumentException("The word is either empty or too long!");
+        }
+        if(!wordHandler.validateLetters(originalWord)) {
+            throw new IllegalArgumentException("The word doesn't contain legal letters for "
+                    + lang.getLangCode() + "language!");
+        }
+    }
+
     public int tryLetter(String letter) {
         if (usedLetters.contains(letter)) {
             throw new IllegalArgumentException("The letter " + letter + "is already tried!");

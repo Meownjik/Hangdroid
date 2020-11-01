@@ -25,6 +25,6 @@ public enum Languages {
     }
 
     public ArrayList<String> getAvailableLettersAsList() {
-        return (ArrayList<String>) Arrays.asList(availableLetters.split("(?!^)"));
+        return new ArrayList<String>(Arrays.asList(availableLetters.split("(?!^)")));
     }
 }
