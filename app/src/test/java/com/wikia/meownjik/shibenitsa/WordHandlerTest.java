@@ -43,5 +43,22 @@ public class WordHandlerTest {
         Assert.assertEquals("а*а*а *а*а*а*а",
                 wordHandler.unhide("Абаба галамага",
                         wordHandler.hide("Абаба галамага"), "а"));
+        Assert.assertEquals("абаба *а*а*а*а",
+                wordHandler.unhide("Абаба галамага", "а*а*а *а*а*а*а", "б"));
+    }
+
+    @Test
+    public void testWordUnhidingNegative() {
+        WordHandler wordHandler = new WordHandler(Languages.RUSSIAN);
+
+        Assert.assertEquals("****", wordHandler
+                .unhide("Вася", "****", "у"));
+        Assert.assertEquals("в***",
+                wordHandler.unhide("Вася", "в***", "б"));
+        Assert.assertEquals(wordHandler.hide("Абаба галамага"),
+                wordHandler.unhide("Абаба галамага",
+                        wordHandler.hide("Абаба галамага"), "8"));
+        Assert.assertEquals("а*а*а *а*а*а*а",
+                wordHandler.unhide("Абаба галамага", "а*а*а *а*а*а*а", "ё"));
     }
 }

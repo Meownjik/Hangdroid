@@ -4,6 +4,7 @@ public class WordHandler {
     Languages lang;
     String availableLetters;
     final int maxLength = 20;
+    final String hider = "*";
 
     public WordHandler(Languages lang) {
         this.lang = lang;
@@ -12,6 +13,14 @@ public class WordHandler {
 
     private String[] getLetters(String word) {
         return word.toLowerCase().split("(?!^)");
+    }
+
+    public String getHider() {
+        return hider;
+    }
+
+    public boolean validateSymbols(String originalWord) {
+        return !originalWord.contains(hider);
     }
 
     public boolean validateLength(String word) {
@@ -38,7 +47,7 @@ public class WordHandler {
         String hiddenWord = "";
         for (String l : letters) {
             if(availableLetters.contains(l)) {
-                hiddenWord += "*";
+                hiddenWord += hider;
             }
             else {
                 hiddenWord += l;
