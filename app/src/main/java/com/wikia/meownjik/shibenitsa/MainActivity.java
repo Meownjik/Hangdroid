@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Intent intent = new Intent(MainActivity.this, InputWordActivity.class);
                         intent.putExtra("players", 2);
+                        intent.putExtra("lang", langs.getSelectedItemId());
                         startActivity(intent);
 
                         Toast.makeText(MainActivity.this, "Starting two players game",

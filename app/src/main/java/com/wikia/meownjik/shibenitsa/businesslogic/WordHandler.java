@@ -58,7 +58,7 @@ public class WordHandler {
                 count++;
             }
         }
-        return (count > 0) && (count <= maxLength);
+        return count <= maxLength;
     }
 
     /**

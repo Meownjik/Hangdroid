@@ -8,14 +8,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wikia.meownjik.shibenitsa.businesslogic.Languages;
+import com.wikia.meownjik.shibenitsa.businesslogic.MessagesEn;
+import com.wikia.meownjik.shibenitsa.businesslogic.WordHandler;
 
 public class InputWordActivity extends AppCompatActivity {
     private static final String TAG = "shibenitsaLogs";
     private Button ok;
     private Spinner langs;
+    private EditText wordInput;
     private ImageView picture;
 
     @Override
@@ -28,13 +35,23 @@ public class InputWordActivity extends AppCompatActivity {
         Log.d(TAG,"Players: " + numOfPlayers);
 
         initComponents();
+        handlePassedData();
         initListeners();
         Log.d(TAG,"InputWordActivity onCreate() done ");
     }
 
+    private void handlePassedData() {
+        Bundle passedData = getIntent().getExtras();
+        int numOfPlayers = passedData.getInt("players", 0);
+        Log.d(TAG,"Players: " + numOfPlayers);
+        long langDropdownSelectionId = passedData.getLong("lang", 0);
+        Log.d(TAG,"Language ID: " + langDropdownSelectionId);
+        langs.setSelection((int) langDropdownSelectionId);
+    }
+
     private void initComponents() {
         ok = (Button) findViewById(R.id.buttonOk);
-
+        wordInput = (EditText) findViewById(R.id.editTextWord);
         picture = (ImageView) findViewById(R.id.picture);
 
         langs = (Spinner) findViewById(R.id.dropdownLang);
@@ -49,8 +66,29 @@ public class InputWordActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(InputWordActivity.this, "Ready for a game!",
-                                Toast.LENGTH_LONG).show();
+                        WordHandler wordHandler = new WordHandler(getCurrentLanguage());
+                        String word = wordInput.getText().toString();
+                        Log.d(TAG, "The word is: '" + word + "'");
+                        if(!wordHandler.validateLength(word)) {
+                            Toast.makeText(InputWordActivity.this,
+                                    MessagesEn.WORD_INVALID_LENGTH.msg(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else if(!wordHandler.validateSpecialSymbols(word)) {
+                            Toast.makeText(InputWordActivity.this,
+                                    MessagesEn.WORD_INVALID_SYMBOLS.msg(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else if(!wordHandler.validateLetters(word)) {
+                            Toast.makeText(InputWordActivity.this,
+                                    MessagesEn.WORD_INVALID_LANGUAGE.msg(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(InputWordActivity.this,
+                                    "Ready for a game with word \"" + word + "\"!",
+                                    Toast.LENGTH_LONG).show();
+                        }
                         Log.d(TAG,"onClick() buttonOk done");
                     }
                 }
@@ -74,5 +112,10 @@ public class InputWordActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private Languages getCurrentLanguage() {
+        Log.d(TAG, "Current language: '" + langs.getSelectedItem().toString() + "'");
+        return Languages.getByName(langs.getSelectedItem().toString());
     }
 }
