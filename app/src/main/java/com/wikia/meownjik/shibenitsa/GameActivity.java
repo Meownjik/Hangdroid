@@ -67,7 +67,7 @@ public class GameActivity extends AppCompatActivity {
                     "Victory!!!",
                     Toast.LENGTH_LONG).show();
         }
-        else if (game.isVictory()) {
+        else if (game.isFailure()) {
             Toast.makeText(GameActivity.this,
                     "Game over...",
                     Toast.LENGTH_LONG).show();
