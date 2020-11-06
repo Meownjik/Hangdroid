@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "shibenitsaLogs";
+    public static final String TAG = "shibenitsaLogs";
     private Button play1;
     private Button play2;
     private Button words;
