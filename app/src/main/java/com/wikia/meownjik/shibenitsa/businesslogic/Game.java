@@ -56,23 +56,24 @@ public class Game {
     private void validateWord() {
         if(!wordHandler.validateSpecialSymbols(originalWord)) {
             throw new IllegalArgumentException("The word shouldn't contain "
-                    + wordHandler.getHider() + "symbol!");
+                    + wordHandler.getHider() + " symbol!");
         }
         if(!wordHandler.validateLength(originalWord)) {
             throw new IllegalArgumentException("The word is either empty or too long!");
         }
         if(!wordHandler.validateLetters(originalWord)) {
             throw new IllegalArgumentException("The word doesn't contain legal letters for "
-                    + lang.getLangCode() + "language!");
+                    + lang.getLangCode() + " language!");
         }
     }
 
     public int tryLetter(String letter) {
+        letter = letter.toLowerCase();
         if (usedLetters.contains(letter)) {
-            throw new IllegalArgumentException("The letter " + letter + "is already tried!");
+            throw new IllegalArgumentException("The letter " + letter + " is already tried!");
         }
         if (!notUsedLetters.contains(letter)) {
-            throw new IllegalArgumentException("The letter " + letter + "can't be used!");
+            throw new IllegalArgumentException("The letter " + letter + " can't be used!");
         }
         usedLetters.add(letter);
         notUsedLetters.remove(letter);

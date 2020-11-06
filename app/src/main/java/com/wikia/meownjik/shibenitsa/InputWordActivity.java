@@ -2,6 +2,7 @@ package com.wikia.meownjik.shibenitsa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -85,8 +86,13 @@ public class InputWordActivity extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
                         }
                         else {
+                            Intent intent = new Intent(InputWordActivity.this,
+                                    GameActivity.class);
+                            intent.putExtra("lang", langs.getSelectedItem().toString());
+                            intent.putExtra("word", word);
+                            startActivity(intent);
                             Toast.makeText(InputWordActivity.this,
-                                    "Ready for a game with word \"" + word + "\"!",
+                                    "Ready for a game!",
                                     Toast.LENGTH_LONG).show();
                         }
                         Log.d(TAG,"onClick() buttonOk done");

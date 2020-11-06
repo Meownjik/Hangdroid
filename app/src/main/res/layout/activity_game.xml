@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/picture"
         android:layout_width="0dp"
-        android:layout_height="251dp"
+        android:layout_height="200dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
@@ -42,14 +42,24 @@
         app:layout_constraintTop_toBottomOf="@+id/picture"
         android:text="Zaglushka Zaglushka" />
 
-    <fragment
-        android:id="@+id/fragmentLetters"
-        android:name="com.wikia.meownjik.shibenitsa.LettersEnFragment"
+<!--    <fragment-->
+<!--        android:id="@+id/fragmentLetters"-->
+<!--        android:name="com.wikia.meownjik.shibenitsa.LettersRuFragment"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textViewWord"-->
+<!--        tools:layout="@layout/fragment_letters_ru" />-->
+
+    <FrameLayout
+        android:id="@+id/frgmContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWord"
-        tools:layout="@layout/fragment_letters_en" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewWord" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
