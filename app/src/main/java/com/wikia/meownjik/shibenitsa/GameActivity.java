@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.wikia.meownjik.shibenitsa.businesslogic.Game;
 import com.wikia.meownjik.shibenitsa.businesslogic.Languages;
 
@@ -59,9 +61,33 @@ public class GameActivity extends AppCompatActivity {
         wordView.setText(game.getHiddenWord());
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.d(TAG, "GameActivity.onSaveInstanceState");
+        Gson gson = new Gson();
+        String json = gson.toJson(game);
+        savedInstanceState.putString("game", json);
+        savedInstanceState.putString("lang", lang.getLangName());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG, "GameActivity.onRestoreInstanceState");
+        Gson gson = new Gson();
+        String json = savedInstanceState.getString("game");
+        game = gson.fromJson(json, Game.class);
+        lang = Languages.getByName(savedInstanceState.getString("lang"));
+        wordView.setText(game.getHiddenWord());
+    }
+
     public void tryLetter(String letter) {
         game.tryLetter(letter);
         wordView.setText(game.getHiddenWord());
+        Log.d(TAG, "Trials left: " + game.getTrialsLeft());
+        Log.d(TAG, "Tried letters: " + game.getUsedLetters());
+        Log.d(TAG, "Not tried letters: " + game.getNotUsedLetters());
         if(game.isVictory()) {
             Toast.makeText(GameActivity.this,
                     "Victory!!!",
@@ -72,5 +98,9 @@ public class GameActivity extends AppCompatActivity {
                     "Game over...",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    public boolean isLetterNotTried(String letter) {
+        return game.getNotUsedLetters().contains(letter.toLowerCase());
     }
 }

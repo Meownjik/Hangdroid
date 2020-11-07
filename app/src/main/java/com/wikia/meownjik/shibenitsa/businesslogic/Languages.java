@@ -18,6 +18,10 @@ public enum Languages {
         this.availableLetters = availableLetters;
     }
 
+    public String getLangName() {
+        return langName;
+    }
+
     public String getLangCode() {
         return langCode;
     }
