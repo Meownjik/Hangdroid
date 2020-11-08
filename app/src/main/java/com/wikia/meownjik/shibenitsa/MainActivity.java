@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent = new Intent(MainActivity.this, WordsListActivity.class);
+                        intent.putExtra("lang", langs.getSelectedItemId());
+                        startActivity(intent);
                         Toast.makeText(MainActivity.this, "Let's update the words database",
                                 Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onClick() buttonWords done");
