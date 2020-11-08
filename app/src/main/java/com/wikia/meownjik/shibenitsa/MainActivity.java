@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(MainActivity.this, "Starting single player game",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onClick() buttonPlay1 done");
                     }
                 }
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
 
                         Toast.makeText(MainActivity.this, "Starting two players game",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onClick() buttonPlay2 done");
                     }
                 }
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         Toast.makeText(MainActivity.this, "Let's update the words database",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onClick() buttonWords done");
                     }
                 }
@@ -93,14 +93,14 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String lang = adapterView.getItemAtPosition(i).toString();
                         Toast.makeText(MainActivity.this, lang + " language selected",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onItemSelected() dropdownLang done, chosen " + lang);
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
                         Toast.makeText(MainActivity.this, "No language selected",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onItemSelected() dropdownLang done, nothing chosen");
                     }
                 }

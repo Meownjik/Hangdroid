@@ -93,7 +93,7 @@ public class InputWordActivity extends AppCompatActivity {
                             startActivity(intent);
                             Toast.makeText(InputWordActivity.this,
                                     "Ready for a game!",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
                         Log.d(TAG,"onClick() buttonOk done");
                     }
@@ -106,14 +106,14 @@ public class InputWordActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String lang = adapterView.getItemAtPosition(i).toString();
                         Toast.makeText(InputWordActivity.this, lang + " language selected",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onItemSelected() dropdownLang done, chosen " + lang);
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
                         Toast.makeText(InputWordActivity.this, "No language selected",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onItemSelected() dropdownLang done, nothing chosen");
                     }
                 }
