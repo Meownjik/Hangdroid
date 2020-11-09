@@ -3,27 +3,29 @@ package com.wikia.meownjik.shibenitsa;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wikia.meownjik.shibenitsa.dummy.DummyContent.DummyItem;
+import com.wikia.meownjik.shibenitsa.database.WordModel;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
+ * {@link RecyclerView.Adapter} that can display a {@link WordModel}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<WordModel> mValues;
     private Context context;
 
-    public WordRecyclerViewAdapter(List<DummyItem> items) {
+    public WordRecyclerViewAdapter(List<WordModel> items) {
         mValues = items;
+        Log.d(MainActivity.TAG, "items ("+ items.size() + "): " + items);
     }
 
     @Override
@@ -35,9 +37,10 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        Log.d(MainActivity.TAG, "onBindViewHolder, position: " + position);
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(String.valueOf(mValues.get(position).getId()));
+        holder.mContentView.setText(mValues.get(position).getWord());
 
         context = holder.mView.getContext();
     }
@@ -51,7 +54,7 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public WordModel mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -63,8 +66,9 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
                 @Override
                 public void onClick(View v) {
                     final int position = getAdapterPosition();
-                    DummyItem a = mValues.get(position);
+                    WordModel a = mValues.get(position);
                     Toast.makeText(context, a.toString(), Toast.LENGTH_LONG).show();
+                    ((WordsListActivity) context).showWordEditDialog(a);
                 }
             });
         }

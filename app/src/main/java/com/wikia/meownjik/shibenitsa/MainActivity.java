@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.wikia.meownjik.shibenitsa.database.DBHelper;
+
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "shibenitsaLogs";
     private Button play1;
@@ -22,12 +24,16 @@ public class MainActivity extends AppCompatActivity {
     private Spinner langs;
     private ImageView picture;
 
+    private DBHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initComponents();
         initListeners();
+
+        dbHelper = new DBHelper(this);
         Log.d(TAG,"MainActivity onCreate() done ");
     }
 

@@ -63,7 +63,7 @@ public class CRUD {
     /* == GET by ID == */
     public static Languages getLanguageById(SQLiteDatabase db, int id) {
         Cursor c = db.query(LANG_TBL.getName(), new String[] {"*"},
-                "id = ?", new String[] {String.valueOf(id)},
+                "_id = ?", new String[] {String.valueOf(id)},
                 null, null, null);
         c.moveToFirst();
         int nameColIndex = c.getColumnIndex(LANG_TBL_COLUMN_NAME.getName());
@@ -75,19 +75,20 @@ public class CRUD {
 
     public static CategoryModel getCategoryById(SQLiteDatabase db, int id) {
         Cursor c = db.query(CAT_TBL.getName(), new String[] {"*"},
-                "id = ?", new String[] {String.valueOf(id)},
+                "_id = ?", new String[] {String.valueOf(id)},
                 null, null, null);
         c.moveToFirst();
         int idColIndex = c.getColumnIndex("_id");
         int nameColIndex = c.getColumnIndex(CAT_TBL_COLUMN_NAME.getName());
         int langIdColIndex = c.getColumnIndex(CAT_TBL_COLUMN_LANG_ID.getName());
 
-        c.close();
-        return new CategoryModel(
+        CategoryModel res = new CategoryModel(
                 c.getInt(idColIndex),
                 c.getString(nameColIndex),
                 getLanguageById(db, c.getInt(langIdColIndex))
         );
+        c.close();
+        return res;
     }
 
     /* == GET all == */
