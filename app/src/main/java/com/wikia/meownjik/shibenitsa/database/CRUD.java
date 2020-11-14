@@ -111,11 +111,35 @@ public class CRUD {
                 words.add(wordModel);
             } while (c.moveToNext());
         } else {
-            Log.d(TAG, "0 rows at table " + WORD_TBL.getName());
+            Log.i(TAG, "0 rows at table " + WORD_TBL.getName());
         }
 
         c.close();
         return words;
+    }
+
+    public static ArrayList<CategoryModel> selectAllCategories(SQLiteDatabase db) {
+        ArrayList<CategoryModel> cats = new ArrayList<>();
+        Cursor c = db.query(CAT_TBL.getName(), new String[] {"*"},
+                null, null, null, null, null);
+        if (c.moveToFirst()) {
+            int idColIndex = c.getColumnIndex("_id");
+            int nameColIndex = c.getColumnIndex(CAT_TBL_COLUMN_NAME.getName());
+            int langIdColIndex = c.getColumnIndex(CAT_TBL_COLUMN_LANG_ID.getName());
+            do {
+                CategoryModel catModel = new CategoryModel(
+                        c.getInt(idColIndex),
+                        c.getString(nameColIndex),
+                        getLanguageById(db, c.getInt(langIdColIndex))
+                );
+                cats.add(catModel);
+            } while (c.moveToNext());
+        } else {
+            Log.i(TAG, "0 rows at table " + CAT_TBL.getName());
+        }
+
+        c.close();
+        return cats;
     }
 
 
