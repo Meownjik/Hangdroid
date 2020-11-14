@@ -17,6 +17,7 @@ import com.wikia.meownjik.shibenitsa.businesslogic.Languages;
 public class GameActivity extends AppCompatActivity {
     public static final String TAG = "shibenitsaLogs";
     private LettersRuFragment ruFragment;
+    private LettersUkFragment ukFragment;
     private ImageView picture;
     private FragmentTransaction fTrans;
     private FrameLayout frameLayout;
@@ -35,26 +36,14 @@ public class GameActivity extends AppCompatActivity {
 
     private void initComponents() {
         ruFragment = new LettersRuFragment();
+        ukFragment = new LettersUkFragment();
         picture = (ImageView) findViewById(R.id.picture);
         frameLayout = (FrameLayout) findViewById(R.id.frgmContainer);
 
         Bundle passedData = getIntent().getExtras();
         lang = Languages.getByName(passedData.getString("lang", "English"));
 
-        fTrans = getSupportFragmentManager().beginTransaction();
-        //fTrans.remove(frag2);
-        switch (lang) {
-            case RUSSIAN:
-                fTrans.add(R.id.frgmContainer, ruFragment);
-                break;
-            case ENGLISH:
-                break;
-            case UKRAINIAN:
-                break;
-            default:
-                break;
-        }
-        fTrans.commit();
+        addLettersFragment();
 
         wordView = (TextView) findViewById(R.id.textViewWord);
         game = new Game(lang, passedData.getString("word"));
@@ -86,21 +75,49 @@ public class GameActivity extends AppCompatActivity {
         game.tryLetter(letter);
         wordView.setText(game.getHiddenWord());
         Log.d(TAG, "Trials left: " + game.getTrialsLeft());
+        Toast.makeText(GameActivity.this,
+                "Trials left: " + game.getTrialsLeft(),
+                Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Tried letters: " + game.getUsedLetters());
         Log.d(TAG, "Not tried letters: " + game.getNotUsedLetters());
         if(game.isVictory()) {
             Toast.makeText(GameActivity.this,
                     "Victory!!!",
                     Toast.LENGTH_LONG).show();
+            removeLettersFragment();
         }
         else if (game.isFailure()) {
             Toast.makeText(GameActivity.this,
                     "Game over...",
                     Toast.LENGTH_LONG).show();
+            removeLettersFragment();
         }
     }
 
     public boolean isLetterNotTried(String letter) {
         return game.getNotUsedLetters().contains(letter.toLowerCase());
+    }
+
+    private void addLettersFragment() {
+        fTrans = getSupportFragmentManager().beginTransaction();
+        switch (lang) {
+            case RUSSIAN:
+                fTrans.add(R.id.frgmContainer, ruFragment);
+                break;
+            case UKRAINIAN:
+                fTrans.add(R.id.frgmContainer, ukFragment);
+                break;
+            case ENGLISH:
+            default:
+                break;
+        }
+        fTrans.commit();
+    }
+
+    private void removeLettersFragment() {
+        fTrans = getSupportFragmentManager().beginTransaction();
+        fTrans.remove(ruFragment);
+        fTrans.remove(ukFragment);
+        fTrans.commit();
     }
 }

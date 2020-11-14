@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".LettersUkFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!-- FIRST ROW -->
+        <Button
+            android:id="@+id/buttonA"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="А"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonB"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:text="Б"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonA"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonV"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:text="В"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonB"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonG"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Г"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintStart_toEndOf="@+id/buttonV"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonD"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Д"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintStart_toEndOf="@+id/buttonG"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonYe"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Е"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintStart_toEndOf="@+id/buttonD"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--    SECOND ROW -->
+
+        <Button
+            android:id="@+id/buttonYo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Є"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonA" />
+
+        <Button
+            android:id="@+id/buttonZh"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Ж"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonA"
+            app:layout_constraintTop_toBottomOf="@+id/buttonA" />
+
+        <Button
+            android:id="@+id/buttonZ"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="З"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonB"
+            app:layout_constraintTop_toBottomOf="@+id/buttonA" />
+
+        <Button
+            android:id="@+id/buttonI"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:text="И"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintEnd_toStartOf="@+id/buttonD"
+            app:layout_constraintTop_toBottomOf="@+id/buttonA" />
+
+        <Button
+            android:id="@+id/buttonJ"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:text="Й"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintEnd_toStartOf="@+id/buttonYe"
+            app:layout_constraintTop_toBottomOf="@+id/buttonA" />
+
+        <Button
+            android:id="@+id/buttonK"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="К"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintStart_toEndOf="@+id/buttonD"
+            app:layout_constraintTop_toBottomOf="@+id/buttonA" />
+
+        <!--    THIRD ROW -->
+
+        <Button
+            android:id="@+id/buttonL"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Л"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonYo" />
+
+        <Button
+            android:id="@+id/buttonM"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="М"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonA"
+            app:layout_constraintTop_toBottomOf="@+id/buttonYo" />
+
+        <Button
+            android:id="@+id/buttonN"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Н"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonB"
+            app:layout_constraintTop_toBottomOf="@+id/buttonYo" />
+
+        <Button
+            android:id="@+id/buttonO"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:text="О"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintEnd_toStartOf="@+id/buttonD"
+            app:layout_constraintTop_toBottomOf="@+id/buttonYo" />
+
+        <Button
+            android:id="@+id/buttonP"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:text="П"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintEnd_toStartOf="@+id/buttonYe"
+            app:layout_constraintTop_toBottomOf="@+id/buttonYo" />
+
+        <Button
+            android:id="@+id/buttonR"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Р"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintStart_toEndOf="@+id/buttonD"
+            app:layout_constraintTop_toBottomOf="@+id/buttonYo" />
+
+        <!--    FOURTH ROW -->
+
+        <Button
+            android:id="@+id/buttonS"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:text="С"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonL" />
+
+        <Button
+            android:id="@+id/buttonT"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Т"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonA"
+            app:layout_constraintTop_toBottomOf="@+id/buttonL" />
+
+        <Button
+            android:id="@+id/buttonU"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="У"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonB"
+            app:layout_constraintTop_toBottomOf="@+id/buttonL" />
+
+        <Button
+            android:id="@+id/buttonF"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:text="Ф"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintEnd_toStartOf="@+id/buttonD"
+            app:layout_constraintTop_toBottomOf="@+id/buttonL" />
+
+        <Button
+            android:id="@+id/buttonH"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:text="Х"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintEnd_toStartOf="@+id/buttonYe"
+            app:layout_constraintTop_toBottomOf="@+id/buttonL" />
+
+        <Button
+            android:id="@+id/buttonTs"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Ц"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintStart_toEndOf="@+id/buttonD"
+            app:layout_constraintTop_toBottomOf="@+id/buttonL" />
+
+        <!--    FIFTH ROW -->
+
+        <Button
+            android:id="@+id/buttonCh"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Ч"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonS" />
+
+        <Button
+            android:id="@+id/buttonSh"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Ш"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonA"
+            app:layout_constraintTop_toBottomOf="@+id/buttonS" />
+
+        <Button
+            android:id="@+id/buttonShch"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Щ"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonB"
+            app:layout_constraintTop_toBottomOf="@+id/buttonS" />
+
+        <Button
+            android:id="@+id/buttonSoftSign"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:text="Ь"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintEnd_toStartOf="@+id/buttonD"
+            app:layout_constraintTop_toBottomOf="@+id/buttonS" />
+
+        <Button
+            android:id="@+id/buttonY"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:text="І"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintEnd_toStartOf="@+id/buttonYe"
+            app:layout_constraintTop_toBottomOf="@+id/buttonS" />
+
+        <Button
+            android:id="@+id/buttonHardSign"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="Ї"
+            android:textSize="12pt"
+            android:textStyle="bold"
+            app:fontFamily="serif-monospace"
+            app:layout_constraintStart_toEndOf="@+id/buttonD"
+            app:layout_constraintTop_toBottomOf="@+id/buttonS" />
+
+        <!--    SIXTHS ROW -->
+
+        <Button
+            android:id="@+id/buttonE"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Ґ"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonCh" />
+
+        <Button
+            android:id="@+id/buttonYu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Ю"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonA"
+            app:layout_constraintTop_toBottomOf="@+id/buttonCh" />
+
+        <Button
+            android:id="@+id/buttonYa"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:text="Я"
+            app:fontFamily="serif-monospace"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="12pt"
+            app:layout_constraintStart_toEndOf="@+id/buttonB"
+            app:layout_constraintTop_toBottomOf="@+id/buttonCh" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>
