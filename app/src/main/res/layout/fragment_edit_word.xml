@@ -2,26 +2,28 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+
     <EditText
         android:id="@+id/wordCaption"
-        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
+        android:autofillHints=""
         android:hint="word"
-        android:autofillHints="" />
+        android:inputType="textNoSuggestions|text" />
+
     <EditText
         android:id="@+id/wordDescription"
-        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
+        android:autofillHints=""
         android:hint="description"
-        android:autofillHints=""/>
+        android:inputType="textMultiLine|textNoSuggestions|text" />
 </LinearLayout>

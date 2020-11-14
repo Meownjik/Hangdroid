@@ -51,12 +51,18 @@ public class EditWordFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(MainActivity.TAG, "EditWordFragment.onCreateView()");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_word, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_word, container, false);
+        wordField = (EditText) view.findViewById(R.id.wordCaption);
+        descriptionField = (EditText) view.findViewById(R.id.wordDescription);
+
+        return view;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Log.d(MainActivity.TAG, "EditWordFragment.onCreateDialog()");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -82,10 +88,11 @@ public class EditWordFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        wordField = (EditText) getView().findViewById(R.id.wordCaption);
-        descriptionField = (EditText) getView().findViewById(R.id.wordDescription);
-
-        wordField.setText(word.getWord()); //TODO text is not set! Why?!
+        Log.d(MainActivity.TAG, "EditWordFragment.onResume()");
+        Log.d(MainActivity.TAG, "word = " + word.toString());
+        wordField.setText(word.getWord()); //TODO text is being redrawn later! Where?
+        Log.d(MainActivity.TAG, "wordField.getText() = " + wordField.getText().toString()); //OK
         descriptionField.setText(word.getDescription());
+        Log.d(MainActivity.TAG, "descriptionField.getText() = " + descriptionField.getText().toString());
     }
 }
