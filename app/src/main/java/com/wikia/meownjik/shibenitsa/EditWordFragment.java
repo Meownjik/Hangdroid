@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.wikia.meownjik.shibenitsa.database.WordModel;
 
 public class EditWordFragment extends DialogFragment {
+    private View dialogView;
     private EditText wordField;
     private EditText descriptionField;
 
@@ -54,8 +55,6 @@ public class EditWordFragment extends DialogFragment {
         Log.d(MainActivity.TAG, "EditWordFragment.onCreateView()");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_word, container, false);
-        wordField = (EditText) view.findViewById(R.id.wordCaption);
-        descriptionField = (EditText) view.findViewById(R.id.wordDescription);
 
         return view;
     }
@@ -69,7 +68,8 @@ public class EditWordFragment extends DialogFragment {
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.fragment_edit_word, null))
+        dialogView = inflater.inflate(R.layout.fragment_edit_word, null);
+        builder.setView(dialogView)
                 // Add action buttons
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
@@ -82,17 +82,20 @@ public class EditWordFragment extends DialogFragment {
                         EditWordFragment.this.getDialog().cancel();
                     }
                 });
+        wordField = (EditText) dialogView.findViewById(R.id.wordCaption);
+        wordField.setText(word.getWord()); //Only here and in this way setting text works properly
+        descriptionField = (EditText) dialogView.findViewById(R.id.wordDescription);
+        descriptionField.setText(word.getDescription());
+
         return builder.create();
     }
 
+    /*
     @Override
     public void onResume() {
         super.onResume();
         Log.d(MainActivity.TAG, "EditWordFragment.onResume()");
         Log.d(MainActivity.TAG, "word = " + word.toString());
-        wordField.setText(word.getWord()); //TODO text is being redrawn later! Where?
-        Log.d(MainActivity.TAG, "wordField.getText() = " + wordField.getText().toString()); //OK
-        descriptionField.setText(word.getDescription());
-        Log.d(MainActivity.TAG, "descriptionField.getText() = " + descriptionField.getText().toString());
     }
+    */
 }
