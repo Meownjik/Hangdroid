@@ -20,14 +20,14 @@ import com.wikia.meownjik.shibenitsa.database.DBHelper;
  * A fragment representing a list of Items.
  */
 public class WordFragment extends Fragment {
-
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+
     private int mColumnCount = 1;
 
     private DBHelper dbHelper;
     private Context context;
+
+    private RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,7 +65,7 @@ public class WordFragment extends Fragment {
             context = view.getContext();
             dbHelper = new DBHelper(context);
 
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -76,5 +76,11 @@ public class WordFragment extends Fragment {
             recyclerView.setAdapter(new WordRecyclerViewAdapter(CRUD.selectAllWords(db)));
         }
         return view;
+    }
+
+    public void refreshAdapter() {
+        //recyclerView.getAdapter().notifyDataSetChanged();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        recyclerView.swapAdapter(new WordRecyclerViewAdapter(CRUD.selectAllWords(db)), true);
     }
 }
