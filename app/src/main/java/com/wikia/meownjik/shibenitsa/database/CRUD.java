@@ -157,5 +157,12 @@ public class CRUD {
         return (int) rowsAffected;
     }
 
+    /* == DELETE == */
+    public static int deleteFromWords(SQLiteDatabase db, int id) {
+        long rowsAffected = db.delete(WORD_TBL.getName(), "_id = ?",
+                new String[] {String.valueOf(id)});
+        return (int) rowsAffected;
+    }
+
 
 }
