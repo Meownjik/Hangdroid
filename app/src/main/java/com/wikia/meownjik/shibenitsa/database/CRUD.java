@@ -142,5 +142,20 @@ public class CRUD {
         return cats;
     }
 
+    /* == UPDATE == */
+    public static int updateWords(SQLiteDatabase db, int id, String word, String category,
+                                      String language, String description) {
+        ContentValues cv = new ContentValues();
+        cv.put("word", word);
+        cv.put("category_id", getCategoryIdByNameAndLanguage(db,
+                category, language));
+        cv.put("description", description);
+        long rowsAffected = db.update(WORD_TBL.getName(), cv,
+                "_id = ?", new String[] {String.valueOf(id)});
+        cv.clear();
+
+        return (int) rowsAffected;
+    }
+
 
 }

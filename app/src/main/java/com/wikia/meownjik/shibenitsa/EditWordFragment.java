@@ -77,7 +77,14 @@ public class EditWordFragment extends DialogFragment {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(getContext(), "Saving (no)", Toast.LENGTH_SHORT).show();
+                        SQLiteDatabase db = dbHelper.getWritableDatabase();
+                        word = new WordModel(word.getId(), wordField.getText().toString(),
+                                CRUD.selectAllCategories(db).get(wordCategory.getSelectedItemPosition()),
+                                descriptionField.getText().toString());
+                        CRUD.updateWords(db, word.getId(), word.getWord(),
+                                word.getCategory().getName(), word.getLang().getLangName(),
+                                word.getDescription());
+                        Toast.makeText(getContext(), "Saving", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
