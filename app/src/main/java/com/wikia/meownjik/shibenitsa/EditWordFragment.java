@@ -58,7 +58,7 @@ public class EditWordFragment extends DialogFragment {
         Gson gson = new Gson();
         word = gson.fromJson(getArguments().getString("word"), WordModel.class);
         dbHelper = new DBHelper(getContext());
-        Log.d(MainActivity.TAG, word.toString());
+        //Log.d(MainActivity.TAG, word.toString());
     }
 
 
@@ -78,13 +78,27 @@ public class EditWordFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         SQLiteDatabase db = dbHelper.getWritableDatabase();
-                        word = new WordModel(word.getId(), wordField.getText().toString(),
+                        int wordId = word.getId();
+                        word = new WordModel(wordId, wordField.getText().toString(),
                                 CRUD.selectAllCategories(db).get(wordCategory.getSelectedItemPosition()),
                                 descriptionField.getText().toString());
-                        CRUD.updateWords(db, word.getId(), word.getWord(),
-                                word.getCategory().getName(), word.getLang().getLangName(),
-                                word.getDescription());
-                        Toast.makeText(getContext(), "Saving", Toast.LENGTH_SHORT).show();
+                        if (wordId > 0) {
+                            CRUD.updateWords(db, wordId, word.getWord(),
+                                    word.getCategory().getName(), word.getLang().getLangName(),
+                                    word.getDescription());
+                            Toast.makeText(getContext(), "Saving changes", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (word.getWord().length() > 0) {
+                            CRUD.insertIntoWords(db, word.getWord(),
+                                    word.getCategory().getName(), word.getLang().getLangName(),
+                                    word.getDescription());
+                            Toast.makeText(getContext(), "New word saved", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(getContext(), "The word could not be empty!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

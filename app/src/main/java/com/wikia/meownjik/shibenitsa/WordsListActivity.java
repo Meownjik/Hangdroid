@@ -4,15 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.wikia.meownjik.shibenitsa.database.WordModel;
 
 public class WordsListActivity extends AppCompatActivity {
+    private Button buttonAddWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words_list);
+        buttonAddWord = (Button) findViewById(R.id.buttonAddWord);
+        buttonAddWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showWordEditDialog(new WordModel(-1, null, null, null));
+            }
+        });
     }
 
     @Override
