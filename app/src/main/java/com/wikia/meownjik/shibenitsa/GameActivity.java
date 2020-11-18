@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         initComponents();
+        changePicture();
     }
 
     private void initComponents() {
@@ -68,30 +69,24 @@ public class GameActivity extends AppCompatActivity {
         String json = savedInstanceState.getString("game");
         game = gson.fromJson(json, Game.class);
         lang = Languages.getByName(savedInstanceState.getString("lang"));
+
         wordView.setText(game.getHiddenWord());
+        changePicture();
+        reactOnGameEnd();
     }
 
     public void tryLetter(String letter) {
         game.tryLetter(letter);
         wordView.setText(game.getHiddenWord());
+        changePicture();
         Log.d(TAG, "Trials left: " + game.getTrialsLeft());
-        Toast.makeText(GameActivity.this,
-                "Trials left: " + game.getTrialsLeft(),
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(GameActivity.this,
+//                "Trials left: " + game.getTrialsLeft(),
+//                Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Tried letters: " + game.getUsedLetters());
         Log.d(TAG, "Not tried letters: " + game.getNotUsedLetters());
-        if(game.isVictory()) {
-            Toast.makeText(GameActivity.this,
-                    "Victory!!!",
-                    Toast.LENGTH_LONG).show();
-            removeLettersFragment();
-        }
-        else if (game.isFailure()) {
-            Toast.makeText(GameActivity.this,
-                    "Game over...",
-                    Toast.LENGTH_LONG).show();
-            removeLettersFragment();
-        }
+
+        reactOnGameEnd();
     }
 
     public boolean isLetterNotTried(String letter) {
@@ -119,5 +114,60 @@ public class GameActivity extends AppCompatActivity {
         fTrans.remove(ruFragment);
         fTrans.remove(ukFragment);
         fTrans.commit();
+    }
+
+    private void reactOnGameEnd() {
+        if(game.isVictory()) {
+            Toast.makeText(GameActivity.this,
+                    "Victory!!!",
+                    Toast.LENGTH_LONG).show();
+            removeLettersFragment();
+        }
+        else if (game.isFailure()) {
+            Toast.makeText(GameActivity.this,
+                    "Game over...",
+                    Toast.LENGTH_LONG).show();
+            removeLettersFragment();
+        }
+    }
+
+    private void changePicture() {
+        switch(game.getTrialsLeft()) {
+            case 10:
+            default:
+                picture.setImageResource(R.drawable.shibenitsa10);
+                break;
+            case 9:
+                picture.setImageResource(R.drawable.shibenitsa9);
+                break;
+            case 8:
+                picture.setImageResource(R.drawable.shibenitsa8);
+                break;
+            case 7:
+                picture.setImageResource(R.drawable.shibenitsa7);
+                break;
+            case 6:
+                picture.setImageResource(R.drawable.shibenitsa6);
+                break;
+            case 5:
+                picture.setImageResource(R.drawable.shibenitsa5);
+                break;
+            case 4:
+                picture.setImageResource(R.drawable.shibenitsa4);
+                break;
+            case 3:
+                picture.setImageResource(R.drawable.shibenitsa3);
+                break;
+            case 2:
+                picture.setImageResource(R.drawable.shibenitsa2);
+                break;
+            case 1:
+                picture.setImageResource(R.drawable.shibenitsa1);
+                break;
+            case 0:
+                picture.setImageResource(R.drawable.shibenitsa0);
+                break;
+        }
+
     }
 }

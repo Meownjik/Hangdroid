@@ -214,6 +214,11 @@ public class LettersUkFragment extends Fragment implements View.OnClickListener 
         Button button = (Button) view.findViewById(id);
         String letter = button.getText().toString();
         button.setEnabled(false);
-        gameActivity.tryLetter(letter);
+        try {
+            gameActivity.tryLetter(letter);
+        }
+        catch (IllegalArgumentException er) {
+            Log.e(GameActivity.TAG, er.toString());
+        }
     }
 }

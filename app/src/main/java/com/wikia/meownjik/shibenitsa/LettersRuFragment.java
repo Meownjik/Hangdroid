@@ -245,6 +245,11 @@ public class LettersRuFragment extends Fragment implements View.OnClickListener 
         String letter = button.getText().toString();
         Log.d(GameActivity.TAG, "id = " + id + ", letter = " + letter);
         button.setEnabled(false);
-        gameActivity.tryLetter(letter);
+        try {
+            gameActivity.tryLetter(letter);
+        }
+        catch (IllegalArgumentException er) {
+            Log.e(GameActivity.TAG, er.toString());
+        }
     }
 }
