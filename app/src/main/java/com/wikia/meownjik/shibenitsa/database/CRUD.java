@@ -8,6 +8,7 @@ import android.util.Log;
 import com.wikia.meownjik.shibenitsa.businesslogic.Languages;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.wikia.meownjik.shibenitsa.database.Tables.*;
 
@@ -89,6 +90,78 @@ public class CRUD {
         );
         c.close();
         return res;
+    }
+
+    /* == GET by parameters == */
+
+    /**
+     * Selects words that contain given string
+     * @param db SQLiteDatabase to work with
+     * @param str The substring that words should contain
+     */
+    public static ArrayList<WordModel> selectWordsByString(SQLiteDatabase db, String str) {
+        //TODO merge duplicated code with selectAllWords()
+        ArrayList<WordModel> words = new ArrayList<>();
+        Cursor c = db.query(WORD_TBL.getName(), new String[] {"*"},
+                WORD_TBL_COLUMN_WORD.getName() + " LIKE '%?%'",
+                new String[] {str}, null, null, null);
+        if (c.moveToFirst()) {
+            int idColIndex = c.getColumnIndex("_id");
+            int wordColIndex = c.getColumnIndex(WORD_TBL_COLUMN_WORD.getName());
+            int catIdColIndex = c.getColumnIndex(WORD_TBL_COLUMN_CAT_ID.getName());
+            int descrColIndex  = c.getColumnIndex(WORD_TBL_COLUMN_DESCRIPTION.getName());
+            do {
+                WordModel wordModel = new WordModel(
+                        c.getInt(idColIndex),
+                        c.getString(wordColIndex),
+                        getCategoryById(db, c.getInt(catIdColIndex)),
+                        c.getString(descrColIndex)
+                );
+                words.add(wordModel);
+            } while (c.moveToNext());
+        } else {
+            Log.i(TAG, "0 rows at table " + WORD_TBL.getName());
+        }
+
+        c.close();
+        return words;
+    }
+
+    /**
+     * Selects words that either contain given string, or their category contain this string,
+     * or their language code equals this string
+     * @param db SQLiteDatabase to work with
+     * @param str The substring that words, category or language code should contain
+     */
+    public static ArrayList<WordModel> selectWordsByString2(SQLiteDatabase db, String str) {
+        //TODO rewrite with SQL select
+        ArrayList<WordModel> allWords = selectAllWords(db);
+        ArrayList<WordModel> chosenWords = new ArrayList<>();
+        boolean isLangCode = false;
+        ArrayList<Languages> langs = new ArrayList<Languages>(Arrays.asList(Languages.values()));
+        for (Languages l : langs) {
+            if(l.getLangCode().equals(str)) {
+                isLangCode = true;
+                break;
+            }
+        }
+
+        if(isLangCode) {
+            for (WordModel w : allWords) {
+                if (w.getCategory().getLang().getLangCode().equals(str)) {
+                    chosenWords.add(w);
+                }
+            }
+        }
+        else {
+            for (WordModel w : allWords) {
+                if (w.getWord().toLowerCase().contains(str.toLowerCase())
+                        || w.getCategory().getName().toLowerCase().contains(str.toLowerCase())) {
+                    chosenWords.add(w);
+                }
+            }
+        }
+        return chosenWords;
     }
 
     /* == GET all == */
