@@ -14,7 +14,13 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.wikia.meownjik.shibenitsa.businesslogic.Languages;
+import com.wikia.meownjik.shibenitsa.database.CRUD;
 import com.wikia.meownjik.shibenitsa.database.DBHelper;
+import com.wikia.meownjik.shibenitsa.database.WordModel;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "shibenitsaLogs";
@@ -59,7 +65,18 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, "Starting single player game",
+                        Intent intent = new Intent(MainActivity.this,
+                                GameActivity.class);
+                        intent.putExtra("lang", langs.getSelectedItem().toString());
+                        String langCode = Languages.getByName(langs.getSelectedItem().toString()).getLangCode();
+                        DBHelper db = new DBHelper(MainActivity.this);
+                        ArrayList<WordModel> words = new ArrayList<>(CRUD.selectWordsByString2(
+                                db.getReadableDatabase(), langCode));
+                        Random rand = new Random();
+                        intent.putExtra("word", words.get(rand.nextInt(words.size())).getWord());
+                        startActivity(intent);
+                        Toast.makeText(MainActivity.this,
+                                "Ready for a game!",
                                 Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onClick() buttonPlay1 done");
                     }
