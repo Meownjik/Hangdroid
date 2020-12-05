@@ -73,11 +73,12 @@ public class MainActivity extends AppCompatActivity {
                         ArrayList<WordModel> words = new ArrayList<>(CRUD.selectWordsByString2(
                                 db.getReadableDatabase(), langCode));
                         Random rand = new Random();
-                        intent.putExtra("word", words.get(rand.nextInt(words.size())).getWord());
+                        WordModel word = words.get(rand.nextInt(words.size()));
+                        intent.putExtra("word", word.getWord());
                         startActivity(intent);
                         Toast.makeText(MainActivity.this,
-                                "Ready for a game!",
-                                Toast.LENGTH_SHORT).show();
+                                word.getCategory().getName() + ". " + word.getDescription(),
+                                Toast.LENGTH_LONG).show();
                         Log.d(TAG,"onClick() buttonPlay1 done");
                     }
                 }

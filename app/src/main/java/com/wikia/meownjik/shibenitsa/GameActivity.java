@@ -18,6 +18,7 @@ public class GameActivity extends AppCompatActivity {
     public static final String TAG = "shibenitsaLogs";
     private LettersRuFragment ruFragment;
     private LettersUkFragment ukFragment;
+    private LettersEnFragment enFragment;
     private ImageView picture;
     private FragmentTransaction fTrans;
     private FrameLayout frameLayout;
@@ -38,6 +39,7 @@ public class GameActivity extends AppCompatActivity {
     private void initComponents() {
         ruFragment = new LettersRuFragment();
         ukFragment = new LettersUkFragment();
+        enFragment = new LettersEnFragment();
         picture = (ImageView) findViewById(R.id.picture);
         frameLayout = (FrameLayout) findViewById(R.id.frgmContainer);
 
@@ -47,7 +49,8 @@ public class GameActivity extends AppCompatActivity {
         addLettersFragment();
 
         wordView = (TextView) findViewById(R.id.textViewWord);
-        game = new Game(lang, passedData.getString("word"));
+        int trials = (lang == Languages.ENGLISH) ? 8 : 9; //Less letters - less trials
+        game = new Game(lang, passedData.getString("word"), trials);
         wordView.setText(game.getHiddenWord());
     }
 
@@ -104,6 +107,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case ENGLISH:
             default:
+                fTrans.add(R.id.frgmContainer, enFragment);
                 break;
         }
         fTrans.commit();
@@ -113,6 +117,7 @@ public class GameActivity extends AppCompatActivity {
         fTrans = getSupportFragmentManager().beginTransaction();
         fTrans.remove(ruFragment);
         fTrans.remove(ukFragment);
+        fTrans.remove(enFragment);
         fTrans.commit();
     }
 

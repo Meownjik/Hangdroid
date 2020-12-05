@@ -86,7 +86,8 @@ public class WordFragment extends Fragment {
 
     public void refreshAdapter(String searchText) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        recyclerView.swapAdapter(new WordRecyclerViewAdapter(CRUD.selectWordsByString2(db, searchText)),
-                true);
+        recyclerView.setAdapter(new WordRecyclerViewAdapter(CRUD.selectWordsByString2(db, searchText)));
+        //recyclerView.swapAdapter(new WordRecyclerViewAdapter(CRUD.selectWordsByString2(db, searchText)),
+        //        false);
     }
 }
