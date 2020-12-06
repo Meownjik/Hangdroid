@@ -119,15 +119,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String lang = adapterView.getItemAtPosition(i).toString();
-                        Toast.makeText(MainActivity.this, lang + " language selected",
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, lang + " language selected",
+//                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onItemSelected() dropdownLang done, chosen " + lang);
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
-                        Toast.makeText(MainActivity.this, "No language selected",
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "No language selected",
+//                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onItemSelected() dropdownLang done, nothing chosen");
                     }
                 }

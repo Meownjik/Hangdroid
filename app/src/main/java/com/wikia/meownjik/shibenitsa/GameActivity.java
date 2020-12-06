@@ -1,8 +1,11 @@
 package com.wikia.meownjik.shibenitsa;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -13,6 +16,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.wikia.meownjik.shibenitsa.businesslogic.Game;
 import com.wikia.meownjik.shibenitsa.businesslogic.Languages;
+import com.wikia.meownjik.shibenitsa.database.CRUD;
+import com.wikia.meownjik.shibenitsa.database.DBHelper;
+import com.wikia.meownjik.shibenitsa.database.WordModel;
 
 public class GameActivity extends AppCompatActivity {
     public static final String TAG = "shibenitsaLogs";
@@ -122,18 +128,36 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void reactOnGameEnd() {
-        if(game.isVictory()) {
-            Toast.makeText(GameActivity.this,
-                    "Victory!!!",
-                    Toast.LENGTH_LONG).show();
+        if (game.isVictory() || game.isFailure()) {
+            String text = game.isVictory() ? "Victory!!!" : "Game over...";
+            Toast.makeText(GameActivity.this, text, Toast.LENGTH_LONG).show();
             removeLettersFragment();
+            showAddWordDialog();
         }
-        else if (game.isFailure()) {
-            Toast.makeText(GameActivity.this,
-                    "Game over...",
-                    Toast.LENGTH_LONG).show();
-            removeLettersFragment();
+    }
+
+    private void showAddWordDialog() {
+        SQLiteDatabase db = (new DBHelper(this)).getReadableDatabase();
+        if (CRUD.selectWordsByString(db, game.getOriginalWord(), 0).size() > 0) {
+            return; //Needn't add if the word is already present
         }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Save word " + game.getOriginalWord() + " in the database?")
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        WordModel word = new WordModel(-1, game.getOriginalWord(), null, null);
+                        EditWordFragment fragment = EditWordFragment.newInstance(word);
+                        fragment.show(getSupportFragmentManager(), "editWords");
+                    }
+                });
+        builder.create();
     }
 
     private void changePicture() {

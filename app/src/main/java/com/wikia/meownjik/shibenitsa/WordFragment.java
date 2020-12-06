@@ -20,8 +20,6 @@ import com.wikia.meownjik.shibenitsa.database.DBHelper;
  * A fragment representing a list of Items.
  */
 public class WordFragment extends Fragment {
-    private static final String ARG_COLUMN_COUNT = "column-count";
-
     private int mColumnCount = 1;
 
     private DBHelper dbHelper;
@@ -36,23 +34,9 @@ public class WordFragment extends Fragment {
     public WordFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static WordFragment newInstance(int columnCount) {
-        WordFragment fragment = new WordFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
@@ -84,10 +68,15 @@ public class WordFragment extends Fragment {
         recyclerView.swapAdapter(new WordRecyclerViewAdapter(CRUD.selectAllWords(db)), true);
     }
 
-    public void refreshAdapter(String searchText) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        recyclerView.setAdapter(new WordRecyclerViewAdapter(CRUD.selectWordsByString2(db, searchText)));
-        //recyclerView.swapAdapter(new WordRecyclerViewAdapter(CRUD.selectWordsByString2(db, searchText)),
-        //        false);
+    public void refreshAdapter(final String searchText) {
+        Thread newThread = new Thread() {
+            @Override
+            public void run() {
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                recyclerView.setAdapter(new WordRecyclerViewAdapter(CRUD.selectWordsByString2(db, searchText)));
+                //Not swapAdapter!
+            }
+        };
+        newThread.start();
     }
 }

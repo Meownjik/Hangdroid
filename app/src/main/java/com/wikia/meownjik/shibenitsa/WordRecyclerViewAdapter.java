@@ -39,8 +39,9 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Log.d(MainActivity.TAG, "onBindViewHolder, position: " + position);
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(String.valueOf(mValues.get(position).getId()));
-        holder.mContentView.setText(mValues.get(position).getWord());
+        //holder.mIdView.setText(String.valueOf(mValues.get(position).getId()));
+        holder.mIdView.setText(String.valueOf(position));
+        holder.mContentView.setText(mValues.get(position).toString());
 
         context = holder.mView.getContext();
     }
@@ -67,7 +68,7 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
                 public void onClick(View v) {
                     final int position = getAdapterPosition();
                     WordModel a = mValues.get(position);
-                    Toast.makeText(context, a.toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, a.toString(), Toast.LENGTH_LONG).show();
                     ((WordsListActivity) context).showWordEditDialog(a);
                 }
             });

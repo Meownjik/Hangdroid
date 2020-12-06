@@ -95,15 +95,33 @@ public class CRUD {
     /* == GET by parameters == */
 
     /**
-     * Selects words that contain given string
-     * @param db SQLiteDatabase to work with
-     * @param str The substring that words should contain
+     * Selects words that contain given string.
+     * @param db SQLiteDatabase to work with.
+     * @param str The substring that words should contain.
+     * @param exact If 0, requires exact match;
+     *              if 1, requires starting with str;
+     *              if 2, requires containing.
      */
-    public static ArrayList<WordModel> selectWordsByString(SQLiteDatabase db, String str) {
+    public static ArrayList<WordModel> selectWordsByString(SQLiteDatabase db, String str,
+                                                           int exact) {
         //TODO merge duplicated code with selectAllWords()
         ArrayList<WordModel> words = new ArrayList<>();
+        String selector;
+        switch (exact) {
+            case 0:
+                selector = " = '?'";
+                break;
+            case 1:
+                selector = " LIKE '?%'";
+                break;
+            case 2:
+            default:
+                selector = " LIKE '%?%'";
+                break;
+        }
+
         Cursor c = db.query(WORD_TBL.getName(), new String[] {"*"},
-                WORD_TBL_COLUMN_WORD.getName() + " LIKE '%?%'",
+                WORD_TBL_COLUMN_WORD.getName() + selector,
                 new String[] {str}, null, null, null);
         if (c.moveToFirst()) {
             int idColIndex = c.getColumnIndex("_id");
