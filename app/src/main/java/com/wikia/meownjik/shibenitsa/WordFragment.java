@@ -69,14 +69,14 @@ public class WordFragment extends Fragment {
     }
 
     public void refreshAdapter(final String searchText) {
-        Thread newThread = new Thread() {
-            @Override
-            public void run() {
+        //Thread newThread = new Thread() {
+        //    @Override
+        //    public void run() {
                 SQLiteDatabase db = dbHelper.getReadableDatabase();
                 recyclerView.setAdapter(new WordRecyclerViewAdapter(CRUD.selectWordsByString2(db, searchText)));
                 //Not swapAdapter!
-            }
-        };
-        newThread.start();
+        //    }
+        //};
+        //newThread.start();
     }
 }

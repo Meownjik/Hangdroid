@@ -109,20 +109,20 @@ public class CRUD {
         String selector;
         switch (exact) {
             case 0:
-                selector = " = '?'";
+                selector = " = '?'".replace("?", str);
                 break;
             case 1:
-                selector = " LIKE '?%'";
+                selector = " LIKE '?%'".replace("?", str);
                 break;
             case 2:
             default:
-                selector = " LIKE '%?%'";
+                selector = " LIKE '%?%'".replace("?", str);
                 break;
         }
 
         Cursor c = db.query(WORD_TBL.getName(), new String[] {"*"},
                 WORD_TBL_COLUMN_WORD.getName() + selector,
-                new String[] {str}, null, null, null);
+                null, null, null, null);
         if (c.moveToFirst()) {
             int idColIndex = c.getColumnIndex("_id");
             int wordColIndex = c.getColumnIndex(WORD_TBL_COLUMN_WORD.getName());

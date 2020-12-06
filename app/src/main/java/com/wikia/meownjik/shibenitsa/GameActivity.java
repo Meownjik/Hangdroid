@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -84,6 +85,31 @@ public class GameActivity extends AppCompatActivity {
         reactOnGameEnd();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (game.isVictory() || game.isFailure()) {
+            showAddWordDialog();
+            quitGame();
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure to interrupt the game?")
+                    .setNegativeButton("No, let's reconsider...", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setPositiveButton("Yes, quit the game!", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            quitGame();
+                        }
+                    });
+            builder.create().show();
+        }
+    }
+
+    //------------------------------------------------------------------------------
+
     public void tryLetter(String letter) {
         game.tryLetter(letter);
         wordView.setText(game.getHiddenWord());
@@ -132,7 +158,6 @@ public class GameActivity extends AppCompatActivity {
             String text = game.isVictory() ? "Victory!!!" : "Game over...";
             Toast.makeText(GameActivity.this, text, Toast.LENGTH_LONG).show();
             removeLettersFragment();
-            showAddWordDialog();
         }
     }
 
@@ -141,7 +166,7 @@ public class GameActivity extends AppCompatActivity {
         if (CRUD.selectWordsByString(db, game.getOriginalWord(), 0).size() > 0) {
             return; //Needn't add if the word is already present
         }
-
+        Log.d(TAG, "AlertDialog builder starts");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Save word " + game.getOriginalWord() + " in the database?")
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -157,7 +182,8 @@ public class GameActivity extends AppCompatActivity {
                         fragment.show(getSupportFragmentManager(), "editWords");
                     }
                 });
-        builder.create();
+        builder.create().show();
+        Log.d(TAG, "AlertDialog builder done");
     }
 
     private void changePicture() {
@@ -198,5 +224,12 @@ public class GameActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    private void quitGame() {
+        Intent intent = new Intent(GameActivity.this, MainActivity.class);
+        //clear back stack so that you couldn't see the hidden word
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

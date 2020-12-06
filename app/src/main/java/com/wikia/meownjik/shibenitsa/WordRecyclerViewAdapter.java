@@ -40,7 +40,7 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
         Log.d(MainActivity.TAG, "onBindViewHolder, position: " + position);
         holder.mItem = mValues.get(position);
         //holder.mIdView.setText(String.valueOf(mValues.get(position).getId()));
-        holder.mIdView.setText(String.valueOf(position));
+        holder.mIdView.setText(String.valueOf(position + 1));
         holder.mContentView.setText(mValues.get(position).toString());
 
         context = holder.mView.getContext();
