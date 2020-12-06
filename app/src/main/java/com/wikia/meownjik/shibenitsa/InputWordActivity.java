@@ -2,6 +2,7 @@ package com.wikia.meownjik.shibenitsa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,25 +68,9 @@ public class InputWordActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        WordHandler wordHandler = new WordHandler(getCurrentLanguage());
                         String word = wordInput.getText().toString();
                         Log.d(TAG, "The word is: '" + word + "'");
-                        if(!wordHandler.validateLength(word)) {
-                            Toast.makeText(InputWordActivity.this,
-                                    MessagesEn.WORD_INVALID_LENGTH.msg(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                        else if(!wordHandler.validateSpecialSymbols(word)) {
-                            Toast.makeText(InputWordActivity.this,
-                                    MessagesEn.WORD_INVALID_SYMBOLS.msg(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                        else if(!wordHandler.validateLetters(word)) {
-                            Toast.makeText(InputWordActivity.this,
-                                    MessagesEn.WORD_INVALID_LANGUAGE.msg(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                        else {
+                        if(validateWord(InputWordActivity.this, word, getCurrentLanguage())) {
                             Intent intent = new Intent(InputWordActivity.this,
                                     GameActivity.class);
                             intent.putExtra("lang", langs.getSelectedItem().toString());
@@ -123,5 +108,28 @@ public class InputWordActivity extends AppCompatActivity {
     private Languages getCurrentLanguage() {
         Log.d(TAG, "Current language: '" + langs.getSelectedItem().toString() + "'");
         return Languages.getByName(langs.getSelectedItem().toString());
+    }
+
+    /**
+     * Uses WordHandler for word validation and shows Toast if there are problems
+     * @return false if word is invalid, true if it is correct
+     */
+    public static boolean validateWord(Context context, String word, Languages lang) {
+        WordHandler wordHandler = new WordHandler(lang);
+        if(!wordHandler.validateLength(word)) {
+            Toast.makeText(context, MessagesEn.WORD_INVALID_LENGTH.msg(), Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(!wordHandler.validateSpecialSymbols(word)) {
+            Toast.makeText(context, MessagesEn.WORD_INVALID_SYMBOLS.msg(), Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(!wordHandler.validateLetters(word)) {
+            Toast.makeText(context, MessagesEn.WORD_INVALID_LANGUAGE.msg(), Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else {
+            return true; //All is correct
+        }
     }
 }

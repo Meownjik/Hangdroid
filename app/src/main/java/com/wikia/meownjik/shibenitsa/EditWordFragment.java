@@ -135,9 +135,14 @@ public class EditWordFragment extends DialogFragment {
 */
 
     private void refreshAdapter() {
-        WordFragment wf = (WordFragment) ((WordsListActivity) getContext()).getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_words);
-        wf.refreshAdapter();
+        try {
+            WordFragment wf = (WordFragment) ((WordsListActivity) getContext()).getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_words);
+            wf.refreshAdapter();
+        }
+        catch (ClassCastException er) {
+            Log.w(MainActivity.TAG, "Used WordsListActivity.refreshAdapter within another activity");
+        }
     }
 
     private void saveChanges(int id) {
@@ -147,20 +152,26 @@ public class EditWordFragment extends DialogFragment {
                 CRUD.selectAllCategories(db).get(wordCategory.getSelectedItemPosition()),
                 descriptionField.getText().toString());
         if (wordId > 0 && word.getWord().length() > 0) {
-            CRUD.updateWords(db, wordId, word.getWord(),
-                    word.getCategory().getName(), word.getLang().getLangName(),
-                    word.getDescription());
-            Toast.makeText(getContext(), "Saving changes", Toast.LENGTH_SHORT).show();
+            if(InputWordActivity.validateWord(getContext(),
+                    wordField.getText().toString(), word.getLang())) {
+                CRUD.updateWords(db, wordId, word.getWord(),
+                        word.getCategory().getName(), word.getLang().getLangName(),
+                        word.getDescription());
+                Toast.makeText(getContext(), "Saving changes", Toast.LENGTH_SHORT).show();
+            }
         }
         else if (word.getWord().length() == 0) {
             CRUD.deleteFromWords(db, word.getId());
             Toast.makeText(getContext(), "The word deleted", Toast.LENGTH_SHORT).show();
         }
         else {
-            CRUD.insertIntoWords(db, word.getWord(),
-                    word.getCategory().getName(), word.getLang().getLangName(),
-                    word.getDescription());
-            Toast.makeText(getContext(), "New word saved", Toast.LENGTH_SHORT).show();
+            if(InputWordActivity.validateWord(getContext(),
+                    wordField.getText().toString(), word.getLang())) {
+                CRUD.insertIntoWords(db, word.getWord(),
+                        word.getCategory().getName(), word.getLang().getLangName(),
+                        word.getDescription());
+                Toast.makeText(getContext(), "New word saved", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

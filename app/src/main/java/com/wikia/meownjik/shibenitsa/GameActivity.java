@@ -34,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
 
     Languages lang;
     Game game;
+    private boolean dialogShown = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +89,16 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (game.isVictory() || game.isFailure()) {
-            showAddWordDialog();
-            quitGame();
+            if (dialogShown) {
+                quitGame();
+            }
+            else {
+                if(!showAddWordDialog()) {
+                    //If the dialog shouldn't be shown
+                    quitGame();
+                }
+                dialogShown = true;
+            }
         }
         else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -161,10 +170,10 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void showAddWordDialog() {
+    private boolean showAddWordDialog() {
         SQLiteDatabase db = (new DBHelper(this)).getReadableDatabase();
-        if (CRUD.selectWordsByString(db, game.getOriginalWord(), 0).size() > 0) {
-            return; //Needn't add if the word is already present
+        if (CRUD.selectWordsByString(db, game.getOriginalWord(), 0, false).size() > 0) {
+            return false; //Needn't add if the word is already present
         }
         Log.d(TAG, "AlertDialog builder starts");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -172,6 +181,7 @@ public class GameActivity extends AppCompatActivity {
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
+                        quitGame();
                     }
                 })
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -184,6 +194,7 @@ public class GameActivity extends AppCompatActivity {
                 });
         builder.create().show();
         Log.d(TAG, "AlertDialog builder done");
+        return true;
     }
 
     private void changePicture() {

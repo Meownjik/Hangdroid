@@ -103,25 +103,28 @@ public class CRUD {
      *              if 2, requires containing.
      */
     public static ArrayList<WordModel> selectWordsByString(SQLiteDatabase db, String str,
-                                                           int exact) {
+                                                           int exact, boolean matchCase) {
         //TODO merge duplicated code with selectAllWords()
         ArrayList<WordModel> words = new ArrayList<>();
+        String wordName = matchCase ?
+                WORD_TBL_COLUMN_WORD.getName() : WORD_TBL_COLUMN_WORD.getName().toLowerCase();
+        String str1 = matchCase ? str : str.toLowerCase();
         String selector;
         switch (exact) {
             case 0:
-                selector = " = '?'".replace("?", str);
+                selector = " = '?'".replace("?", str1);
                 break;
             case 1:
-                selector = " LIKE '?%'".replace("?", str);
+                selector = " LIKE '?%'".replace("?", str1);
                 break;
             case 2:
             default:
-                selector = " LIKE '%?%'".replace("?", str);
+                selector = " LIKE '%?%'".replace("?", str1);
                 break;
         }
 
         Cursor c = db.query(WORD_TBL.getName(), new String[] {"*"},
-                WORD_TBL_COLUMN_WORD.getName() + selector,
+                wordName + selector,
                 null, null, null, null);
         if (c.moveToFirst()) {
             int idColIndex = c.getColumnIndex("_id");
