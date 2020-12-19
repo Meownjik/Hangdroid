@@ -70,28 +70,42 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void fillCategoriesTable(SQLiteDatabase db) {
-        for (String cat : new String[]{"Съедобное", "Предметы", "Понятия"}) {
+        for (String cat : new String[]{
+                "Понятия", "Съедобное", "Предметы", "Объекты", "Одушевлённое", "Природа"
+        }) {
             insertIntoCategories(db, cat, Languages.RUSSIAN.getLangName());
         }
-        for (String cat : new String[]{"Food", "Items", "Abstraction"}) {
+        for (String cat : new String[]{
+                "Abstraction", "Food", "Items", "Objects", "Animate", "Nature"
+        }) {
             insertIntoCategories(db, cat, Languages.ENGLISH.getLangName());
         }
-        for (String cat : new String[]{"Їстівне", "Речі", "Поняття"}) {
+        for (String cat : new String[]{
+                "Поняття", "Їстівне", "Речі", "Об'єкти", "Істота", "Природа"
+        }) {
             insertIntoCategories(db, cat, Languages.UKRAINIAN.getLangName());
         }
     }
 
     private void fillWordsTable(SQLiteDatabase db) {
-        insertIntoWords(db, "Помидор", "Съедобное", Languages.RUSSIAN.getLangName(),
+        insertIntoWords(db, "помидор", "Съедобное", Languages.RUSSIAN.getLangName(),
                 "Дж. Вашингтона пытались этим отравить. Он ядовит, пока зелёный.");
-        insertIntoWords(db, "Очки", "Предметы", Languages.RUSSIAN.getLangName(),
+        insertIntoWords(db, "очки", "Предметы", Languages.RUSSIAN.getLangName(),
                 "С этой вещью мартышке разобраться не под силу.");
+        insertIntoWords(db, "торговый центр", "Объекты", Languages.RUSSIAN.getLangName(),
+                "Место, где девушки могут провести весь день.");
 
-        insertIntoWords(db, "Оселедець", "Поняття", Languages.UKRAINIAN.getLangName(),
+        insertIntoWords(db, "оселедець", "Поняття", Languages.UKRAINIAN.getLangName(),
                 "Є у річці, є в козака.");
+        insertIntoWords(db, "сало", "Їстівне", Languages.UKRAINIAN.getLangName(),
+                "Українська їжа.");
+        insertIntoWords(db, "дуб", "Природа", Languages.UKRAINIAN.getLangName(),
+                "Старий велетень.");
 
-        insertIntoWords(db, "Dictionary", "Items", Languages.ENGLISH.getLangName(),
+        insertIntoWords(db, "dictionary", "Items", Languages.ENGLISH.getLangName(),
                 "A thick book that might be useful for this game.");
+        insertIntoWords(db, "wolf", "Animate", Languages.ENGLISH.getLangName(),
+                "A forest habitant");
 
     }
 

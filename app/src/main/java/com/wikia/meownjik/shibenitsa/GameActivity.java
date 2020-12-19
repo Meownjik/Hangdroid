@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,13 +36,22 @@ public class GameActivity extends AppCompatActivity {
     Languages lang;
     Game game;
     private boolean dialogShown = false;
+    private int numOfPlayers;
+    private String hint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        Bundle passedData = getIntent().getExtras();
+        numOfPlayers = passedData.getInt("players", 0);
+        hint = passedData.getString("hint", "No hint provided");
+
         initComponents();
+        showHint();
         changePicture();
+        initListeners();
     }
 
     private void initComponents() {
@@ -60,6 +70,17 @@ public class GameActivity extends AppCompatActivity {
         int trials = (lang == Languages.ENGLISH) ? 8 : 9; //Less letters - less trials
         game = new Game(lang, passedData.getString("word"), trials);
         wordView.setText(game.getHiddenWord());
+    }
+
+    private void initListeners() {
+        picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(numOfPlayers == 1) {
+                    showHint();
+                }
+            }
+        });
     }
 
     @Override
@@ -242,5 +263,9 @@ public class GameActivity extends AppCompatActivity {
         //clear back stack so that you couldn't see the hidden word
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    private void showHint() {
+        Toast.makeText(GameActivity.this, hint, Toast.LENGTH_LONG).show();
     }
 }

@@ -75,10 +75,12 @@ public class MainActivity extends AppCompatActivity {
                         Random rand = new Random();
                         WordModel word = words.get(rand.nextInt(words.size()));
                         intent.putExtra("word", word.getWord());
+                        String hint = word.getCategory().getName() + ". " + word.getDescription();
+                        intent.putExtra("hint", hint);
                         startActivity(intent);
-                        Toast.makeText(MainActivity.this,
-                                word.getCategory().getName() + ". " + word.getDescription(),
-                                Toast.LENGTH_LONG).show();
+//                        Toast.makeText(MainActivity.this,
+//                                word.getCategory().getName() + ". " + word.getDescription(),
+//                                Toast.LENGTH_LONG).show();
                         Log.d(TAG,"onClick() buttonPlay1 done");
                     }
                 }
@@ -93,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("lang", langs.getSelectedItemId());
                         startActivity(intent);
 
-                        Toast.makeText(MainActivity.this, "Starting two players game",
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "Starting two players game",
+//                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onClick() buttonPlay2 done");
                     }
                 }

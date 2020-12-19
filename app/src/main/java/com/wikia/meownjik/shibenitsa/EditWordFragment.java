@@ -154,7 +154,7 @@ public class EditWordFragment extends DialogFragment {
         if (wordId > 0 && word.getWord().length() > 0) {
             if(InputWordActivity.validateWord(getContext(),
                     wordField.getText().toString(), word.getLang())) {
-                CRUD.updateWords(db, wordId, word.getWord(),
+                CRUD.updateWords(db, wordId, word.getWord().toLowerCase(),
                         word.getCategory().getName(), word.getLang().getLangName(),
                         word.getDescription());
                 Toast.makeText(getContext(), "Saving changes", Toast.LENGTH_SHORT).show();
@@ -167,7 +167,7 @@ public class EditWordFragment extends DialogFragment {
         else {
             if(InputWordActivity.validateWord(getContext(),
                     wordField.getText().toString(), word.getLang())) {
-                CRUD.insertIntoWords(db, word.getWord(),
+                CRUD.insertIntoWords(db, word.getWord().toLowerCase(),
                         word.getCategory().getName(), word.getLang().getLangName(),
                         word.getDescription());
                 Toast.makeText(getContext(), "New word saved", Toast.LENGTH_SHORT).show();
