@@ -74,13 +74,12 @@ public class MainActivity extends AppCompatActivity {
                                 db.getReadableDatabase(), langCode));
                         Random rand = new Random();
                         WordModel word = words.get(rand.nextInt(words.size()));
+                        intent.putExtra("players", 1);
                         intent.putExtra("word", word.getWord());
                         String hint = word.getCategory().getName() + ". " + word.getDescription();
                         intent.putExtra("hint", hint);
                         startActivity(intent);
-//                        Toast.makeText(MainActivity.this,
-//                                word.getCategory().getName() + ". " + word.getDescription(),
-//                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, hint, Toast.LENGTH_LONG).show();
                         Log.d(TAG,"onClick() buttonPlay1 done");
                     }
                 }

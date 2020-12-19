@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity {
         hint = passedData.getString("hint", "No hint provided");
 
         initComponents();
-        showHint();
+        //showHint();
         changePicture();
         initListeners();
     }
@@ -76,8 +76,9 @@ public class GameActivity extends AppCompatActivity {
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "numOfPlayers: " + numOfPlayers);
                 if(numOfPlayers == 1) {
-                    showHint();
+                    Toast.makeText(GameActivity.this, hint, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -168,8 +169,9 @@ public class GameActivity extends AppCompatActivity {
                 fTrans.add(R.id.frgmContainer, ukFragment);
                 break;
             case ENGLISH:
-            default:
                 fTrans.add(R.id.frgmContainer, enFragment);
+                break;
+            default:
                 break;
         }
         fTrans.commit();
@@ -263,9 +265,5 @@ public class GameActivity extends AppCompatActivity {
         //clear back stack so that you couldn't see the hidden word
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-    }
-
-    private void showHint() {
-        Toast.makeText(GameActivity.this, hint, Toast.LENGTH_LONG).show();
     }
 }
