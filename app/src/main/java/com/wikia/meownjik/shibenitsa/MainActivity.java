@@ -108,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, WordsListActivity.class);
                         intent.putExtra("lang", langs.getSelectedItemId());
                         startActivity(intent);
-                        Toast.makeText(MainActivity.this, "Let's update the words database",
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "Let's update the words database",
+//                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onClick() buttonWords done");
                     }
                 }

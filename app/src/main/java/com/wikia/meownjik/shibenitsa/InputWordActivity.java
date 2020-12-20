@@ -73,6 +73,7 @@ public class InputWordActivity extends AppCompatActivity {
                         if(validateWord(InputWordActivity.this, word, getCurrentLanguage())) {
                             Intent intent = new Intent(InputWordActivity.this,
                                     GameActivity.class);
+                            intent.putExtra("players", 2);
                             intent.putExtra("lang", langs.getSelectedItem().toString());
                             intent.putExtra("word", word);
                             startActivity(intent);

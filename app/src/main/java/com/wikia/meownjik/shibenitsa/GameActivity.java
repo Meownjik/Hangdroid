@@ -2,6 +2,7 @@ package com.wikia.meownjik.shibenitsa;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
@@ -16,11 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.wikia.meownjik.shibenitsa.businesslogic.Game;
 import com.wikia.meownjik.shibenitsa.businesslogic.Languages;
 import com.wikia.meownjik.shibenitsa.database.CRUD;
 import com.wikia.meownjik.shibenitsa.database.DBHelper;
 import com.wikia.meownjik.shibenitsa.database.WordModel;
+
+import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
     public static final String TAG = "shibenitsaLogs";
@@ -30,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
     private ImageView picture;
     private FragmentTransaction fTrans;
     private FrameLayout frameLayout;
+    private ArrayList<Fragment> attachedFragments;
 
     private TextView wordView;
 
@@ -38,6 +43,10 @@ public class GameActivity extends AppCompatActivity {
     private boolean dialogShown = false;
     private int numOfPlayers;
     private String hint;
+
+    public GameActivity() {
+        attachedFragments = new ArrayList<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +57,12 @@ public class GameActivity extends AppCompatActivity {
         numOfPlayers = passedData.getInt("players", 0);
         hint = passedData.getString("hint", "No hint provided");
 
-        initComponents();
-        //showHint();
+        initComponents(savedInstanceState);
         changePicture();
         initListeners();
     }
 
-    private void initComponents() {
+    private void initComponents(Bundle savedInstanceState) {
         ruFragment = new LettersRuFragment();
         ukFragment = new LettersUkFragment();
         enFragment = new LettersEnFragment();
@@ -64,11 +72,22 @@ public class GameActivity extends AppCompatActivity {
         Bundle passedData = getIntent().getExtras();
         lang = Languages.getByName(passedData.getString("lang", "English"));
 
-        addLettersFragment();
+        try {
+            Gson gson = new Gson();
+            String json = savedInstanceState.getString("game");
+            game = gson.fromJson(json, Game.class);
+        }
+        catch (NullPointerException | JsonSyntaxException er) {
+            Log.w(TAG, er.getMessage());
+            int trials = (lang == Languages.ENGLISH) ? 8 : 9; //Less letters - less trials
+            game = new Game(lang, passedData.getString("word"), trials);
+        }
+
+        if(!game.isFailure() && !game.isVictory()) {
+            addLettersFragment();
+        }
 
         wordView = (TextView) findViewById(R.id.textViewWord);
-        int trials = (lang == Languages.ENGLISH) ? 8 : 9; //Less letters - less trials
-        game = new Game(lang, passedData.getString("word"), trials);
         wordView.setText(game.getHiddenWord());
     }
 
@@ -164,12 +183,15 @@ public class GameActivity extends AppCompatActivity {
         switch (lang) {
             case RUSSIAN:
                 fTrans.add(R.id.frgmContainer, ruFragment);
+                attachedFragments.add(ruFragment);
                 break;
             case UKRAINIAN:
                 fTrans.add(R.id.frgmContainer, ukFragment);
+                attachedFragments.add(ukFragment);
                 break;
             case ENGLISH:
                 fTrans.add(R.id.frgmContainer, enFragment);
+                attachedFragments.add(enFragment);
                 break;
             default:
                 break;
@@ -179,10 +201,13 @@ public class GameActivity extends AppCompatActivity {
 
     private void removeLettersFragment() {
         fTrans = getSupportFragmentManager().beginTransaction();
-        fTrans.remove(ruFragment);
-        fTrans.remove(ukFragment);
-        fTrans.remove(enFragment);
+        for(Fragment f : attachedFragments) {
+            fTrans.remove(f);
+        }
         fTrans.commit();
+        //Without this, fragment is still attached if screen rotation took place
+        frameLayout.removeAllViews();
+        Log.d(TAG, "attachedFragments.size() = " + attachedFragments.size());
     }
 
     private void reactOnGameEnd() {
@@ -261,7 +286,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void quitGame() {
-        Intent intent = new Intent(GameActivity.this, MainActivity.class);
+        Intent intent;
+        if(numOfPlayers == 1) {
+            intent = new Intent(GameActivity.this, MainActivity.class);
+        }
+        else {
+            intent = new Intent(GameActivity.this, InputWordActivity.class);
+            intent.putExtra("players", 2);
+            intent.putExtra("lang", 0); //stub
+        }
         //clear back stack so that you couldn't see the hidden word
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

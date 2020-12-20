@@ -113,7 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.d(MainActivity.TAG, "DBHelper onCreate() database");
         Toast.makeText(context, "Installing the words database, please wait...",
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_SHORT).show();
 
         db.execSQL("PRAGMA foreign_keys=on;");
 
