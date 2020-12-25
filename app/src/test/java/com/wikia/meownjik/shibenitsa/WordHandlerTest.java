@@ -20,7 +20,6 @@ public class WordHandlerTest {
         Assert.assertFalse(wordHandler.validateLength("йцукенгшщзхъэждлорпавыф"));
         Assert.assertFalse(wordHandler.validateLength(""));
         Assert.assertFalse(wordHandler.validateLength(" "));
-        Assert.assertFalse(wordHandler.validateLength("123546789-0()<>|"));
     }
 
     @Test

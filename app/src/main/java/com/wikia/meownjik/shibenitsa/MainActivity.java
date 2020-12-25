@@ -3,7 +3,6 @@ package com.wikia.meownjik.shibenitsa;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         initComponents();
         initListeners();
 
-        dbHelper = new DBHelper(this);
+        dbHelper = new DBHelper(MainActivity.this);
         Log.d(TAG,"MainActivity onCreate() done ");
     }
 
@@ -51,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
         picture = (ImageView) findViewById(R.id.picture);
 
         langs = (Spinner) findViewById(R.id.dropdownLang);
-// Create an ArrayAdapter using the string array and a default spinner layout
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.supportedLanguages, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
+        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
+        // Apply the adapter to the spinner
         langs.setAdapter(adapter);
     }
 
@@ -69,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
                                 GameActivity.class);
                         intent.putExtra("lang", langs.getSelectedItem().toString());
                         String langCode = Languages.getByName(langs.getSelectedItem().toString()).getLangCode();
-                        DBHelper db = new DBHelper(MainActivity.this);
                         ArrayList<WordModel> words = new ArrayList<>(CRUD.selectWordsByString2(
-                                db.getReadableDatabase(), langCode));
+                                dbHelper.getReadableDatabase(), langCode));
                         Random rand = new Random();
                         WordModel word = words.get(rand.nextInt(words.size()));
                         intent.putExtra("players", 1);
@@ -80,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("hint", hint);
                         startActivity(intent);
                         Toast.makeText(MainActivity.this, hint, Toast.LENGTH_LONG).show();
+
                         Log.d(TAG,"onClick() buttonPlay1 done");
                     }
                 }
@@ -94,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("lang", langs.getSelectedItemId());
                         startActivity(intent);
 
-//                        Toast.makeText(MainActivity.this, "Starting two players game",
-//                                Toast.LENGTH_SHORT).show();
                         Log.d(TAG,"onClick() buttonPlay2 done");
                     }
                 }
@@ -108,8 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, WordsListActivity.class);
                         intent.putExtra("lang", langs.getSelectedItemId());
                         startActivity(intent);
-//                        Toast.makeText(MainActivity.this, "Let's update the words database",
-//                                Toast.LENGTH_SHORT).show();
+
                         Log.d(TAG,"onClick() buttonWords done");
                     }
                 }
@@ -120,15 +116,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String lang = adapterView.getItemAtPosition(i).toString();
-//                        Toast.makeText(MainActivity.this, lang + " language selected",
-//                                Toast.LENGTH_SHORT).show();
+
                         Log.d(TAG,"onItemSelected() dropdownLang done, chosen " + lang);
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
-//                        Toast.makeText(MainActivity.this, "No language selected",
-//                                Toast.LENGTH_SHORT).show();
+
                         Log.d(TAG,"onItemSelected() dropdownLang done, nothing chosen");
                     }
                 }

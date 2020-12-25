@@ -164,10 +164,8 @@ public class GameActivity extends AppCompatActivity {
         game.tryLetter(letter);
         wordView.setText(game.getHiddenWord());
         changePicture();
+
         Log.d(TAG, "Trials left: " + game.getTrialsLeft());
-//        Toast.makeText(GameActivity.this,
-//                "Trials left: " + game.getTrialsLeft(),
-//                Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Tried letters: " + game.getUsedLetters());
         Log.d(TAG, "Not tried letters: " + game.getNotUsedLetters());
 

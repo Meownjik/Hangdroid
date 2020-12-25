@@ -19,6 +19,12 @@ import android.widget.Toast;
 import com.wikia.meownjik.shibenitsa.businesslogic.Languages;
 import com.wikia.meownjik.shibenitsa.businesslogic.MessagesEn;
 import com.wikia.meownjik.shibenitsa.businesslogic.WordHandler;
+import com.wikia.meownjik.shibenitsa.database.CRUD;
+import com.wikia.meownjik.shibenitsa.database.DBHelper;
+import com.wikia.meownjik.shibenitsa.database.WordModel;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class InputWordActivity extends AppCompatActivity {
     private static final String TAG = "shibenitsaLogs";
@@ -91,19 +97,29 @@ public class InputWordActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String lang = adapterView.getItemAtPosition(i).toString();
-//                        Toast.makeText(InputWordActivity.this, lang + " language selected",
-//                                Toast.LENGTH_SHORT).show();
+
                         Log.d(TAG,"onItemSelected() dropdownLang done, chosen " + lang);
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
-//                        Toast.makeText(InputWordActivity.this, "No language selected",
-//                                Toast.LENGTH_SHORT).show();
+
                         Log.d(TAG,"onItemSelected() dropdownLang done, nothing chosen");
                     }
                 }
         );
+
+        picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DBHelper db = new DBHelper(InputWordActivity.this);
+                ArrayList<WordModel> words = new ArrayList<>(CRUD.selectWordsByString2(
+                        db.getReadableDatabase(), getCurrentLanguage().getLangCode()));
+                Random rand = new Random();
+                WordModel word = words.get(rand.nextInt(words.size()));
+                wordInput.setText(word.getWord());
+            }
+        });
     }
 
     private Languages getCurrentLanguage() {

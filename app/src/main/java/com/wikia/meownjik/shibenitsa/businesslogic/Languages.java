@@ -31,21 +31,18 @@ public enum Languages {
     }
 
     public ArrayList<String> getAvailableLettersAsList() {
-        return new ArrayList<String>(Arrays.asList(availableLetters.split("(?!^)")));
+        return new ArrayList<>(Arrays.asList(availableLetters.split("(?!^)")));
     }
 
     public static Languages getByName(String langName) {
         switch (langName) {
             case "Русский":
                 return RUSSIAN;
-                //break;
             case "Українська":
                 return UKRAINIAN;
-                //break;
             case "English":
             default:
                 return ENGLISH;
-                //break;
         }
     }
 }

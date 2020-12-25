@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -37,10 +35,6 @@ public class EditWordFragment extends DialogFragment {
     private WordModel word;
     private DBHelper dbHelper;
 
-//    public EditWordFragment(WordModel word) {
-//        this.word = word;
-//    }
-
     public static EditWordFragment newInstance(WordModel word) {
         EditWordFragment f = new EditWordFragment();
         Gson gson = new Gson();
@@ -58,7 +52,6 @@ public class EditWordFragment extends DialogFragment {
         Gson gson = new Gson();
         word = gson.fromJson(getArguments().getString("word"), WordModel.class);
         dbHelper = new DBHelper(getContext());
-        //Log.d(MainActivity.TAG, word.toString());
     }
 
 
@@ -126,13 +119,6 @@ public class EditWordFragment extends DialogFragment {
 
         return view;
     }
-/*
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(MainActivity.TAG, "EditWordFragment.onResume()");
-    }
-*/
 
     private void refreshAdapter() {
         try {

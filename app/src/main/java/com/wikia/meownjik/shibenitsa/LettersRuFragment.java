@@ -54,7 +54,6 @@ public class LettersRuFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onAttach(Context activity) {
-        //public void onAttach(Activity activity) {
         super.onAttach(activity);
         Log.d(GameActivity.TAG, "LettersRuFragment onAttach()");
     }
@@ -207,37 +206,6 @@ public class LettersRuFragment extends Fragment implements View.OnClickListener 
         restoreButtonsState(); //Only here Activity.onRestoreInstanceState is done
     }
 
-    /*
-            @Override
-            public void onPause() {
-                super.onPause();
-                Log.d(GameActivity.TAG, "LettersRuFragment onPause()");
-            }
-
-            @Override
-            public void onStop() {
-                super.onStop();
-                Log.d(GameActivity.TAG, "LettersRuFragment onStop()");
-            }
-
-            @Override
-            public void onDestroyView() {
-                super.onDestroyView();
-                Log.d(GameActivity.TAG, "LettersRuFragment onDestroyView()");
-            }
-
-            @Override
-            public void onDestroy() {
-                super.onDestroy();
-                Log.d(GameActivity.TAG, "LettersRuFragment onDestroy()");
-            }
-
-            @Override
-            public void onDetach() {
-                super.onDetach();
-                Log.d(GameActivity.TAG, "LettersRuFragment onDetach()");
-            }
-    */
     @Override
     public void onClick(View view) {
         int id = view.getId();

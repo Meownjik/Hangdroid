@@ -3,15 +3,11 @@ package com.wikia.meownjik.shibenitsa;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wikia.meownjik.shibenitsa.database.WordModel;
 
@@ -19,7 +15,6 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link WordModel}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerViewAdapter.ViewHolder> {
 
@@ -43,7 +38,6 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Log.d(MainActivity.TAG, "onBindViewHolder, position: " + position);
         holder.mItem = mValues.get(position);
-        //holder.mIdView.setText(String.valueOf(mValues.get(position).getId()));
         holder.mIdView.setText(String.valueOf(position + 1));
         holder.mContentView.setText(mValues.get(position).toString());
 
@@ -71,9 +65,8 @@ public class WordRecyclerViewAdapter extends RecyclerView.Adapter<WordRecyclerVi
                 @Override
                 public void onClick(View v) {
                     final int position = getAdapterPosition();
-                    WordModel a = mValues.get(position);
-                    //Toast.makeText(context, a.toString(), Toast.LENGTH_LONG).show();
-                    ((WordsListActivity) context).showWordEditDialog(a);
+                    WordModel w = mValues.get(position);
+                    ((WordsListActivity) context).showWordEditDialog(w);
                 }
             });
         }

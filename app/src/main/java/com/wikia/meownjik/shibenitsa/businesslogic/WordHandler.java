@@ -48,7 +48,7 @@ public class WordHandler {
      * @return true if OK, false if there are problems
      */
     public boolean validateLength(String word) {
-        if (word.length() == 0) {
+        if (word.trim().length() == 0) {
             return false;
         }
         String[] letters = getLetters(word);

@@ -68,15 +68,12 @@ public class WordFragment extends Fragment {
         recyclerView.swapAdapter(new WordRecyclerViewAdapter(CRUD.selectAllWords(db)), true);
     }
 
+    /**
+     * Performs search in the database and refreshes what is displayed
+     */
     public void refreshAdapter(final String searchText) {
-        //Thread newThread = new Thread() {
-        //    @Override
-        //    public void run() {
-                SQLiteDatabase db = dbHelper.getReadableDatabase();
-                recyclerView.setAdapter(new WordRecyclerViewAdapter(CRUD.selectWordsByString2(db, searchText)));
-                //Not swapAdapter!
-        //    }
-        //};
-        //newThread.start();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        recyclerView.setAdapter(new WordRecyclerViewAdapter(CRUD.selectWordsByString2(db, searchText)));
+        //Not swapAdapter!
     }
 }
