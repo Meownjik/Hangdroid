@@ -1,3 +1,5 @@
+[Link to get the .apk](https://github.com/Meownjik/Hangdroid/blob/master/app/release/hangdroid.apk)
+
 # Hangdroid
 
 A classic intellectual word game «Hangman» (Виселица, Шибениця), that you might have been playing on paper at your school time. 
